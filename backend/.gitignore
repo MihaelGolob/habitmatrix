@@ -1,0 +1,92 @@
+# rider + idea
+.idea/
+*.sln.iml
+*.DotSettings.user
+
+# build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# user-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.csproj.user
+*.rsuser
+*.sln.docstates
+
+# vs / msbuild generated
+*.vs/
+TestResult*/
+build/
+artifacts/
+
+# dotnet stuff
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*_i.c
+*_p.c
+*.dbmdl
+*.bak
+*.backup
+*.mdf
+*.ldf
+
+# entity framework migrations
+Migrations/**/obj/
+Migrations/**/bin/
+
+# nuget
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+packages/
+.nuget/
+
+# environment
+.env
+.env.*
+
+# logs
+*.log
+*.tlog
+
+# temp + cache
+*.tmp
+*.temp
+*.cache
+*.ide
+*.pidb
+*.svclog
+*.aps
+*.ncrunchsolution
+
+# rider caches
+.idea/.idea/
+.idea/.idea.*
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/httpRequests/
+.idea/shelf/
+.idea/caches/
+.idea/assetWizardSettings.xml
+
+# coverage / test
+*.coverage
+*.coveragexml
+.coverage/
+TestResults/
+*.trx
+
+# other
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings
+.vscode/
+.DS_Store
+Thumbs.db
