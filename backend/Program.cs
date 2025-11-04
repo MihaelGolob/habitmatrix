@@ -1,10 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 using backend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -27,6 +24,7 @@ builder.Services.AddAuthentication(x => {
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:JWTSecret"]!))
     };
 });
+builder.Services.Configure<HmSettings>(builder.Configuration.GetSection("AppSettings"));
 
 var app = builder.Build();
 
@@ -44,37 +42,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api");
-
-app.MapPost("api/login", async (UserManager<UserModel> userManager, [FromBody] UserLoginModel userLogin) => {
-    var user = await userManager.FindByEmailAsync(userLogin.Email);
-
-    if (user == null || !await userManager.CheckPasswordAsync(user, userLogin.Password))
-        return Results.BadRequest(new { message = "Email or password is incorrect" });
-
-    var signKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:JWTSecret"]!));
-    var tokenDescriptor = new SecurityTokenDescriptor {
-        Subject = new ClaimsIdentity([new Claim("UserID", user.Id)]),
-        Expires = DateTime.UtcNow.AddMinutes(10),
-        SigningCredentials = new SigningCredentials(signKey, SecurityAlgorithms.HmacSha256)
-    };
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-    var token = tokenHandler.WriteToken(securityToken);
-
-    return Results.Ok(new { token });
-});
-
-app.MapPost("api/register",
-    async (UserManager<UserModel> userManager, [FromBody] UserRegistrationModel userRegistration) => {
-        var user = new UserModel {
-            Email = userRegistration.Email,
-            UserName = userRegistration.Email,
-            Name = userRegistration.Name
-        };
-        var result = await userManager.CreateAsync(user, userRegistration.Password);
-
-        return result.Succeeded ? Results.Ok(result) : Results.BadRequest(result);
-    }
-);
 
 app.Run();
