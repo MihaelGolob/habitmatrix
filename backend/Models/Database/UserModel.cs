@@ -7,4 +7,6 @@ public class UserModel : IdentityUser {
     [PersonalData]
     [Column(TypeName = "varchar(100)")]
     public string Name { get; set; } = "";
+
+    public ICollection<HabitModel> Habits { get; set; } = new List<HabitModel>();
 }
