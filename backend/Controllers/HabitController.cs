@@ -9,8 +9,6 @@ public class HabitController(HmDbContext _context) : ControllerBase {
         public string Name { get; set; } = string.Empty;
         public string ColorHex { get; set; } = "#FFFF00";
     }
-    // todo [GET] get all habits for user
-    // todo [DELETE] delete habit
 
     [HttpPost("AddHabit")]
     public async Task<IActionResult> AddHabit(string userId, [FromBody] HabitCreateModel habit) {
