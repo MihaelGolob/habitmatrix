@@ -6,6 +6,7 @@ namespace backend.Models;
 public class HmDbContext(DbContextOptions<HmDbContext> options) : IdentityDbContext(options) {
     public DbSet<UserModel> AppUsers { get; set; }
     public DbSet<HabitModel> Habits { get; set; }
+    public DbSet<HabitEntryModel> HabitEntries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder) {
         base.OnModelCreating(builder);
