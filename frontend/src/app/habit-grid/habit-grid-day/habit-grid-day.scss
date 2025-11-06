@@ -1,0 +1,12 @@
+.day {
+    border: 3px solid var(--grid-border);
+    border-radius: 15px;
+    aspect-ratio: 1 / 1;
+    padding: 10px;
+
+    transition: all 0.5s;
+}
+
+.day:hover {
+    filter: brightness(1.6);
+}

@@ -1,0 +1,17 @@
+<div class="habit-grid">
+    <!-- TODO: redesign without using tables for easier styling -->
+    <table>
+    @for(month of months; track month) {
+        <tr>
+            <td class="month-name">
+                {{getMonthName(month)}}
+            </td>
+            @for (day of getDaysForMonth(month) ; track day) {
+                <td>
+                    <app-habit-grid-day/>
+                </td>
+            }
+        </tr>
+    }
+    </table>
+</div>
