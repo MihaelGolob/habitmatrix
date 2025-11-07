@@ -1,0 +1,6 @@
+<div class="header">
+    <h1>Habit Tracker</h1>
+    <div class="theme-icon" mat-icon-button (click)="themeService.toggleTheme()">
+        <ng-icon [name]= "themeService.isDarkMode() ? 'heroSun' : 'heroMoon'" size="40"/>
+    </div>
+</div>

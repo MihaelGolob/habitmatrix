@@ -1,0 +1,11 @@
+.header {
+    // background-color: var(--accent-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .theme-icon {
+    cursor: pointer;
+}
