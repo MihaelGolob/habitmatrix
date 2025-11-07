@@ -63,7 +63,7 @@ public class HabitController(HmDbContext _context) : ControllerBase {
 
     [HttpGet("GetAllHabits")]
     public async Task<IActionResult> GetAllHabits(string userId) {
-        var h = await _context.Habits.ToListAsync();
+        var h = await _context.Habits.Where(h => h.UserId == userId).ToListAsync();
         return Ok(h);
     }
 

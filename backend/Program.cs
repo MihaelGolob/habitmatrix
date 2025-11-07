@@ -34,6 +34,7 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.MapGet("/", () => Results.Redirect("/swagger"));
+app.UseCors(options => options.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 
 app.UseCors();
 app.UseHttpsRedirection();
@@ -41,6 +42,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGroup("api");
 
 app.Run();
