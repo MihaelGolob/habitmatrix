@@ -1,5 +1,5 @@
 <div class="day">
-    @for(habit of completedHabits; track habit) {
-          <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="(100 /completedHabits.length).toString() + '%'"></div>
+    @for(habit of completedHabits(); track habit) {
+          <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidhtPercentage()"></div>
     }
 </div>

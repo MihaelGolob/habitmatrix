@@ -6,7 +6,7 @@
             </div>
             @for (day of getDaysForMonth(month) ; track day) {
                 <div class="element">
-                    <app-habit-grid-day/>
+                    <app-habit-grid-day [dayDate]="makeDate(2025, month, day)" />
                 </div>
             }
         </div>

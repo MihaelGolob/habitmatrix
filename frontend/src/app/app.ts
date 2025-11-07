@@ -7,7 +7,7 @@ import { Header } from './components/header/header';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HabitGrid, Header],
+  imports: [HabitGrid, Header],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

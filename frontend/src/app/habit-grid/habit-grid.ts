@@ -45,4 +45,8 @@ export class HabitGrid {
         return "Unknown"
     }
   }
+
+   makeDate(year: number, month: number, day: number): Date {
+    return new Date(year, month - 1, day);
+  }
 }
