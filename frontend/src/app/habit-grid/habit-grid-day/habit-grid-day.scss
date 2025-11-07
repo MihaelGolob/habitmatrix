@@ -1,12 +1,20 @@
 .day {
-    border: 3px solid var(--grid-border);
     border-radius: 15px;
     aspect-ratio: 1 / 1;
-    padding: 10px;
 
-    transition: all 0.5s;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+
+    transition: all 0.2s;
+    background-color: var(--grid-border);
 }
 
 .day:hover {
-    filter: brightness(1.6);
+    filter: brightness(2)
+}
+
+.completed-habit {
+    height: 100%;
+    flex: 0 0 auto; /* widths come from the inline [style.width] */
 }

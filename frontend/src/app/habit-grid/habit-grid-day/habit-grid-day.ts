@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HabitModel } from '../../domain/habit-model';
 
 @Component({
   selector: 'app-habit-grid-day',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './habit-grid-day.scss',
 })
 export class HabitGridDay {
-
+  completedHabits:HabitModel[] = [];
 }
