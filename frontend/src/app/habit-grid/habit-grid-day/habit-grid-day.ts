@@ -11,6 +11,7 @@ import { HabitService } from '../../services/habit-service';
 export class HabitGridDay implements OnInit{
   completedHabits = signal<HabitModel[]>([]);
   dayDate = input.required<Date>();
+  showTooltip = signal(false);
 
   constructor(private habitService: HabitService) {}
 
@@ -24,5 +25,13 @@ export class HabitGridDay implements OnInit{
 
   isToday() {
     return this.dayDate().toDateString() == new Date().toDateString();
+  }
+
+  onMouseEnter() {
+    this.showTooltip.set(true);
+  }
+
+  onMouseLeave() {
+    this.showTooltip.set(false);
   }
 }

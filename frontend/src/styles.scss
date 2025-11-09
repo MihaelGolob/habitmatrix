@@ -1,6 +1,7 @@
 /* Light mode defaults */
 :root {
   --bg-color: #ffffff;
+  --bg-sec-color: #d0cdcd;
   --text-color: #272727;
   --primary-color: #0a9683;  /* Indigo-like */
   --accent-color: #e91e63;   /* Pink-like */
@@ -16,6 +17,7 @@
 /* Dark mode overrides */
 .dark-mode {
   --bg-color: #121212;
+  --bg-sec-color: #333333;
   --text-color: #ffffff;
   --primary-color: #0fb8a1;  /* Blue-grey */
   --accent-color: #ffc107;   /* Amber */

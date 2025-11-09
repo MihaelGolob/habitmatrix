@@ -18,3 +18,37 @@
     height: 100%;
     flex: 0 0 auto; /* widths come from the inline [style.width] */
 }
+
+.habit-tooltip {
+  position: absolute;
+  z-index: 50;
+  max-width: 220px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--bg-sec-color);
+  color: var(--text-color);
+  pointer-events: none; /* avoid flicker when hovering tooltip */
+  transform: translate(6px, 6px); /* subtle offset from cursor */
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

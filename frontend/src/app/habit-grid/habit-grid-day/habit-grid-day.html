@@ -1,5 +1,21 @@
-<div class="day" [style.border]="isToday() ? '3px solid var(--primary-color)' : 'none'">
+<div 
+class="day" 
+[style.border]="isToday() ? '3px solid var(--primary-color)' : 'none'"
+(mouseenter)="onMouseEnter()"
+(mouseleave)="onMouseLeave()"
+>
     @for(habit of completedHabits(); track habit) {
-          <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidhtPercentage()"></div>
+        <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidhtPercentage()"></div>
     }
+
 </div>
+@if (showTooltip() && completedHabits().length > 0) {
+    <div class="habit-tooltip" >
+        @for (habit of completedHabits(); track habit) {
+            <div class="tooltip-row">
+                <span class="dot" [style.background-color]="habit.colorHex"></span>
+                <span class="name">{{ habit.name }}</span>
+            </div>
+        }
+    </div>
+}
