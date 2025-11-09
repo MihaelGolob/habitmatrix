@@ -21,4 +21,8 @@ export class HabitGridDay implements OnInit{
   getHabitWidhtPercentage(): string {
     return (100 / this.completedHabits().length).toString() + '%';
   }
+
+  isToday() {
+    return this.dayDate().toDateString() == new Date().toDateString();
+  }
 }

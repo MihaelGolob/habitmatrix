@@ -1,4 +1,4 @@
-<div class="day">
+<div class="day" [style.border]="isToday() ? '3px solid var(--primary-color)' : 'none'">
     @for(habit of completedHabits(); track habit) {
           <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidhtPercentage()"></div>
     }
