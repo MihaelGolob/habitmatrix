@@ -8,21 +8,37 @@
 .habit-grid .row {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
     margin: 10px 0 10px 0;
+    row-gap: 10px;
+}
+
+
+@media (max-width: 800px) {
+    .habit-grid .row {
+        flex-direction: column;
+    }
+}
+
+.habit-grid .month-name {
+    font-size: 20px;
+    color: var(--primary-color);
+    width: 130px;
+}
+
+.habit-grid .cells {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 5px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .habit-grid .element {
     width:50px;
     height:50px;
-    margin-left: 5px;
-    flex: 0 0 50px
-}
-
-.habit-grid .month-name {
-    font-size: 20px;
-    width: 130px;
-    flex: 0 0 auto;
-    color: var(--primary-color)
+    flex: 0 0 50px;
+    margin-left: 0;
 }
