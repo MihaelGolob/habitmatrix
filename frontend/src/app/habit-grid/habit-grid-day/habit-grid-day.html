@@ -3,9 +3,10 @@ class="day"
 [style.border]="isToday() ? '3px solid var(--primary-color)' : 'none'"
 (mouseenter)="onMouseEnter()"
 (mouseleave)="onMouseLeave()"
+(click)="onMouseClick()"
 >
     @for(habit of completedHabits(); track habit) {
-        <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidhtPercentage()"></div>
+        <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidthPercentage()"></div>
     }
 
 </div>
@@ -18,4 +19,13 @@ class="day"
             </div>
         }
     </div>
+}
+
+@if (dialogOpen()) {
+    <app-habit-day-dialog
+        [date]="dayDate()"
+        [habits]="this.habitService.habits()"
+        [selectedIds]="getCompletedHabitsIds()"
+        (closed)="onDialogClosed($event)"
+    />
 }
