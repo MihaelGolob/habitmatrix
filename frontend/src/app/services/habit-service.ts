@@ -35,16 +35,12 @@ export class HabitService {
   }
   
   async getCompletedHabitsForDayAsync(date:Date) {
-    // if (this.habitEntries.length <= 0) {
-    //   await this.getHabitEntriesAsync();
-    // }
-    // if (this.habits.length <= 0) {
-    //   await this.getHabitsAsync();
-    // }
-    await Promise.all([
-      this.habits().length ? Promise.resolve(this.habits()) : this.getHabitsAsync(),
-      this.habitEntries().length ? Promise.resolve(this.habitEntries()) : this.getHabitEntriesAsync()
-    ]);
+    if (this.habitEntries.length <= 0) {
+      await this.getHabitEntriesAsync();
+    }
+    if (this.habits.length <= 0) {
+      await this.getHabitsAsync();
+    }
 
     const dayStr = date.toDateString();
 
@@ -57,5 +53,16 @@ export class HabitService {
     }
 
     return result;
+  }
+
+  async removeHabitEntryAsync(habitId: number, date: Date) {
+    let entryId = this.habitEntries().find(e => e.habitId === habitId && new Date(e.date).toDateString() === date.toDateString())?.id;
+    if (!entryId) return;
+
+    this.http.delete(this.url + '/DeleteHabitEntry', {params: {habitEntryId: entryId}}).subscribe(error => {console.log(error)});
+  }
+
+  addHabitEntryAsync(habitId: number, date: Date) {
+    this.http.post(this.url + '/AddHabitEntry', null, {params: {userId: environment.userId, habitId: habitId, date: date.toISOString()}}).subscribe(error => {console.log(error)});
   }
 }

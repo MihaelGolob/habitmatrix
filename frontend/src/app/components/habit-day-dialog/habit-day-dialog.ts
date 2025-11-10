@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, effect, input, OnInit, output, signal } from '@angular/core';
 import { HabitModel } from '../../domain/habit-model';
 
 @Component({
@@ -7,17 +7,18 @@ import { HabitModel } from '../../domain/habit-model';
   templateUrl: './habit-day-dialog.html',
   styleUrl: './habit-day-dialog.scss',
 })
-export class HabitDayDialog {
+export class HabitDayDialog implements OnInit{
   date = input.required<Date>();
   habits = input.required<HabitModel[]>();
-  selectedIds = input<number[]>([]);
+  initialSelectedHabits = input<number[]>([]);
 
   closed = output<number[] | undefined>();
 
-  private selectedSet = signal<Set<number>>(new Set(this.selectedIds() ?? []));
+  private selectedHabits = signal<Set<number>>(new Set<number>());
+  selectedHabitsSet = this.selectedHabits.asReadonly();
 
-  ngOnChanges() {
-    this.selectedSet.set(new Set(this.selectedIds() ?? []));
+  ngOnInit(): void {
+    this.selectedHabits.set(new Set(this.initialSelectedHabits() ?? []));
   }
 
   cancel() {
@@ -25,7 +26,7 @@ export class HabitDayDialog {
   }
 
   save() {
-    this.closed.emit(Array.from(this.selectedSet()));
+    this.closed.emit(Array.from(this.selectedHabits()));
   }
 
   onBackdropClick() {
@@ -33,12 +34,12 @@ export class HabitDayDialog {
   }
 
   isSelected(id: number) : boolean {
-    return this.selectedIds().includes(id);
+    return this.selectedHabits().has(id);
   }
 
   toggle(id: number, checked: boolean) {
-    const next = new Set(this.selectedSet());
+    const next = new Set(this.selectedHabits());
     checked ? next.add(id) : next.delete(id);
-    this.selectedSet.set(next);
+    this.selectedHabits.set(next);
   }
 }

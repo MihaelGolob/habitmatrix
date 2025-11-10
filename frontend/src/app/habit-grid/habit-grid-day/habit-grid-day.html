@@ -25,7 +25,7 @@ class="day"
     <app-habit-day-dialog
         [date]="dayDate()"
         [habits]="this.habitService.habits()"
-        [selectedIds]="getCompletedHabitsIds()"
+        [initialSelectedHabits]="getCompletedHabitsIds()"
         (closed)="onDialogClosed($event)"
     />
 }

@@ -12,13 +12,13 @@
                 </div>
             }
 
-            @for (h of habits(); track h) {
+            @for (h of habits(); track h.id) {
                 <div class="habit-row">
                     <label>
                         <input
                             type="checkbox"
                             [checked]="isSelected(h.id)"
-                            (change)="toggle(h.id, $any($event.target).checked)"
+                            (change)="toggle(h.id, $event.target.checked)"
                         />
                         <span class="dot" [style.backgroundColor]="h.colorHex || '#888'"></span>
                         <span class="label">{{ h.name }}</span>
