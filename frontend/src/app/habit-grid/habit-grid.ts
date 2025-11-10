@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { HabitGridDay } from './habit-grid-day/habit-grid-day';
+import { HabitService } from '../services/habit-service';
 
 @Component({
   selector: 'app-habit-grid',
@@ -7,8 +8,16 @@ import { HabitGridDay } from './habit-grid-day/habit-grid-day';
   templateUrl: './habit-grid.html',
   styleUrl: './habit-grid.scss',
 })
-export class HabitGrid {
+export class HabitGrid implements OnInit{
   months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
+  loaded = signal(false);
+
+  constructor(public habitService: HabitService) {}
+
+  async ngOnInit() {
+    await Promise.all([this.habitService.getHabitsAsync(), this.habitService.getHabitEntriesAsync()]);
+    this.loaded.set(true);
+  }
 
   getDaysForMonth(month:number) {
     var numDays = new Date(2025, month, 0).getDate()

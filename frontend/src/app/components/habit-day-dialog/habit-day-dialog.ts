@@ -1,9 +1,10 @@
 import { Component, effect, input, OnInit, output, signal } from '@angular/core';
 import { HabitModel } from '../../domain/habit-model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-habit-day-dialog',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './habit-day-dialog.html',
   styleUrl: './habit-day-dialog.scss',
 })

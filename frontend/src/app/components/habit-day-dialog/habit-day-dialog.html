@@ -1,7 +1,7 @@
 <div class="backdrop" (click)="onBackdropClick()">
     <div class="modal" (click)="$event.stopPropagation()">
         <div class="header">
-            <h3>Habits for {{ date() }}</h3>
+            <h3>Habits for {{ date() | date:"mediumDate"}}</h3>
             <button class="icon-btn" aria-label="Close" (click)="cancel()">✕</button>
         </div>
 

@@ -10,40 +10,47 @@ import { firstValueFrom } from 'rxjs';
 })
 export class HabitService {
   constructor(private http: HttpClient) {}
-  url:string = environment.apiBaseUrl;
+  url: string = environment.apiBaseUrl;
   habitEntries = signal<HabitEntryModel[]>([]);
   habits = signal<HabitModel[]>([]);
 
-  async getHabitsAsync() {
-    if (this.habits.length <= 0) {
-      this.habits();
-    }
+  private habitsPromise: Promise<HabitModel[]> | null = null;
+  private habitEntriesPromise: Promise<HabitEntryModel[]> | null = null;
 
-    const data = await firstValueFrom(this.http.get<HabitModel[]>(this.url + '/GetAllHabits', {params: {userId: environment.userId}}));
-    this.habits.set(data);
-    return data;
+  getHabitsAsync(): Promise<HabitModel[]> {
+    if (this.habits().length > 0) {
+      return Promise.resolve(this.habits());
+    }
+    if (!this.habitsPromise) {
+      this.habitsPromise = firstValueFrom(
+        this.http.get<HabitModel[]>(this.url + '/GetAllHabits', { params: { userId: environment.userId } })
+      ).then(data => {
+        this.habits.set(data);
+        return data;
+      });
+    }
+    return this.habitsPromise;
   }
 
-  async getHabitEntriesAsync() {
-    if (this.habitEntries.length <= 0) {
-      this.habitEntries();
+  getHabitEntriesAsync(): Promise<HabitEntryModel[]> {
+    if (this.habitEntries().length > 0) {
+      return Promise.resolve(this.habitEntries());
     }
-
-    const data = await firstValueFrom(this.http.get<HabitEntryModel[]>(this.url + '/GetAllHabitEntries', {params: {userId: environment.userId}}));
-    this.habitEntries.set(data);
-    return data;
+    if (!this.habitEntriesPromise) {
+      this.habitEntriesPromise = firstValueFrom(
+        this.http.get<HabitEntryModel[]>(this.url + '/GetAllHabitEntries', { params: { userId: environment.userId } })
+      ).then(data => {
+        this.habitEntries.set(data);
+        return data;
+      });
+    }
+    return this.habitEntriesPromise;
   }
-  
-  async getCompletedHabitsForDayAsync(date:Date) {
-    if (this.habitEntries.length <= 0) {
-      await this.getHabitEntriesAsync();
-    }
-    if (this.habits.length <= 0) {
-      await this.getHabitsAsync();
-    }
+
+  async getCompletedHabitsForDayAsync(date: Date): Promise<HabitModel[]> {
+    await Promise.all([this.getHabitsAsync(), this.getHabitEntriesAsync()]); // Ensures both are loaded
 
     const dayStr = date.toDateString();
-
     const entriesForDay = this.habitEntries().filter(e => new Date(e.date).toDateString() === dayStr);
     const result: HabitModel[] = [];
 
@@ -56,13 +63,21 @@ export class HabitService {
   }
 
   async removeHabitEntryAsync(habitId: number, date: Date) {
-    let entryId = this.habitEntries().find(e => e.habitId === habitId && new Date(e.date).toDateString() === date.toDateString())?.id;
-    if (!entryId) return;
+    const entry = this.habitEntries().find(e => e.habitId === habitId && new Date(e.date).toDateString() === date.toDateString());
+    if (!entry?.id) return;
 
-    this.http.delete(this.url + '/DeleteHabitEntry', {params: {habitEntryId: entryId}}).subscribe(error => {console.log(error)});
+    await firstValueFrom(this.http.delete(this.url + '/DeleteHabitEntry', { params: { habitEntryId: entry.id } }));
+    // Update local signal to avoid refetch
+    this.habitEntries.update(entries => entries.filter(e => e.id !== entry.id));
   }
 
-  addHabitEntryAsync(habitId: number, date: Date) {
-    this.http.post(this.url + '/AddHabitEntry', null, {params: {userId: environment.userId, habitId: habitId, date: date.toISOString()}}).subscribe(error => {console.log(error)});
+  async addHabitEntryAsync(habitId: number, date: Date) {
+    const response = await firstValueFrom(
+      this.http.post<HabitEntryModel>(this.url + '/AddHabitEntry', null, {
+        params: { userId: environment.userId, habitId: habitId, date: date.toISOString() }
+      })
+    );
+    // Update local signal to avoid refetch
+    this.habitEntries.update(entries => [...entries, response]);
   }
 }
