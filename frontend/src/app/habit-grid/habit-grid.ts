@@ -20,7 +20,7 @@ export class HabitGrid implements OnInit{
   }
 
   getDaysForMonth(month:number) {
-    var numDays = new Date(2025, month, 0).getDate()
+    var numDays = new Date(Date.UTC(2025, month, 0)).getDate()
     return Array.from({ length: numDays }, (_, i) => i + 1)
   }
 
@@ -56,6 +56,6 @@ export class HabitGrid implements OnInit{
   }
 
    makeDate(year: number, month: number, day: number): Date {
-    return new Date(year, month - 1, day);
+    return new Date(Date.UTC(year, month - 1, day));
   }
 }
