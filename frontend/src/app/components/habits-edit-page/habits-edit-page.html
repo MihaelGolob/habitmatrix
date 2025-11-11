@@ -1,1 +1,18 @@
-<p>habits-edit-page works!</p>
+<div class="my-habits">
+    @for(h of this.editedHabits(); track h.id) {
+      <div class="habit-item">
+        <div class="remove-item-btn" (click)="removeHabit(h.id)">-</div>
+        @if (editingHabitsIds.has(h.id)) {
+          <input class="habit-item-name-input" [(ngModel)]="h.name" (blur)="stopEdit(h.id)" (keydown.enter)="stopEdit(h.id)" autofocus>
+        } @else {
+          <div class="habit-item-name" (click)="startEdit(h.id)">{{h.name}}</div>
+        }
+        <input type="color" class="color-input" [(ngModel)]="h.colorHex"/>
+      </div>
+    }
+    <div class="add-item-btn" (click)="addHabit()">+</div>
+    <div class="btn-container">
+        <button class="btn save">Save</button>
+        <button class="btn" (click)="cancel()">Cancel</button>
+    </div>
+</div>
