@@ -1,7 +1,7 @@
 <div class="backdrop" (click)="onBackdropClick()">
     <div class="modal" (click)="$event.stopPropagation()">
         <div class="header">
-            <h3>Habits for {{ date() | date:"mediumDate"}}</h3>
+            <h3>Habits for <span class="date">{{ date() | date:"mediumDate"}}</span></h3>
             <button class="icon-btn" aria-label="Close" (click)="cancel()">✕</button>
         </div>
 
@@ -15,13 +15,19 @@
             @for (h of habits(); track h.id) {
                 <div class="habit-row">
                     <label>
-                        <input
-                            type="checkbox"
-                            [checked]="isSelected(h.id)"
-                            (change)="toggle(h.id, $event.target.checked)"
-                        />
                         <span class="dot" [style.backgroundColor]="h.colorHex || '#888'"></span>
                         <span class="label">{{ h.name }}</span>
+                        <div class="checkbox-wrapper-24">
+                            <input
+                                type="checkbox"
+                                id="check-{{ h.id }}"
+                                [checked]="isSelected(h.id)"
+                                (change)="toggle(h.id, $event.target.checked)"
+                            />
+                            <label for="check-{{ h.id }}">
+                                <span><!-- This span is needed to create the "checkbox" element --></span>
+                            </label>
+                        </div>
                     </label>
                 </div>
             }
