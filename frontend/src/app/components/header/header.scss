@@ -7,6 +7,17 @@
     color: var(--primary-color);
 }
 
-.header .theme-icon {
+.texts {
+    display: flex;
+    align-items: flex-end;
+    gap: 80px;
+}
+
+.header .clickable {
     cursor: pointer;
+    transition: color 0.3s;
+}
+
+.header .clickable:hover {
+    color: var(--bg-sec-color);
 }
