@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 import { environment } from '../environment/environment';
 import { HabitEntryModel } from '../domain/habit-entry-model';
 import { HabitModel } from '../domain/habit-model';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +79,44 @@ export class HabitService {
     );
     // Update local signal to avoid refetch
     this.habitEntries.update(entries => [...entries, response]);
+  }
+
+  async addNewHabit(habit : HabitModel) {
+    const url = `${this.url}/AddHabit?userId=${habit.userId}`;
+    const body = {
+      name: habit.name,
+      colorHex: habit.colorHex
+    };
+
+    try {
+      await lastValueFrom(this.http.post(url, body));
+    } catch (error) {
+      console.error('Error adding new habit:', error);
+      throw error; 
+    }
+  }
+
+  async removeHabit(habit : HabitModel) {
+    try {
+      await firstValueFrom(this.http.delete(this.url + '/DeleteHabit', {params: {userId: environment.userId, habitId: habit.id}}));
+    } catch (error) {
+      console.error('Error removing a habit: ', error);
+      throw error;
+    }
+  }
+
+  async editHabit(habit : HabitModel) {
+    const updateUrl = `${this.url}/UpdateHabit?userId=${habit.userId}&habitId=${habit.id}`;
+    const body = {
+      name: habit.name,
+      colorHex: habit.colorHex
+    };
+
+    try {
+      await lastValueFrom(this.http.put(updateUrl, body));
+    } catch (error) {
+      console.error('Error updating habit:', error);
+      throw error; 
+    }
   }
 }

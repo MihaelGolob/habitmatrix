@@ -33,7 +33,17 @@ export class HabitsEditPage implements OnInit {
   }
 
   save() {
-    // todo: save changed habits and add new habits
+    let currentHabits = this.habitService.habits();
+    let newHabits : HabitModel[] = this.editedHabits().filter(hm => currentHabits.find(chm => chm.id == hm.id) == undefined);
+    newHabits.forEach(h => this.habitService.addNewHabit(h));
+
+    let editedHabits : HabitModel[] = this.editedHabits().filter(hm => currentHabits.find(chm => chm.id == hm.id) != undefined);;
+    editedHabits.forEach(h => this.habitService.editHabit(h));
+
+    let removedHabits : HabitModel[] = currentHabits.filter(hm => this.editedHabits().find(ehm => ehm.id == hm.id) == undefined);
+    removedHabits.forEach(h => this.habitService.removeHabit(h));
+
+    this.habitService.habits.set(this.editedHabits());
   }
 
   addHabit() {
