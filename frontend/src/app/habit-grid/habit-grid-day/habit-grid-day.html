@@ -5,6 +5,7 @@ class="day"
 (mouseleave)="onMouseLeave()"
 (click)="onMouseClick()"
 >
+    <span class="day-number">{{this.dayDate().getDate()}}</span>
     @for(habit of completedHabits(); track habit) {
         <div class="completed-habit" [style.background-color]="habit.colorHex" [style.width]="getHabitWidthPercentage()"></div>
     }
