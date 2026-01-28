@@ -1,0 +1,48 @@
+.container {
+    height: 100vh;
+    position: relative;
+}
+
+.window {
+    background-color: var(--bg-sec-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 70px 70px 70px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 1px #36363699;
+}
+
+.container .window form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .window form .btn {
+    margin-top: 20px;
+    padding: 10px;
+    width: 300px;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--bg-color);
+    font-size: 20px;
+}
+
+.container h2 {
+    color: var(--primary-color);
+    font-size: 30px;
+}
+
+.container .window form .submit-btn {
+    margin-top: 50px;
+    background-color: rgb(50, 221, 101);
+    font-weight: bolder;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container .window form .submit-btn:hover {
+    background-color: rgb(32, 154, 69);
+}

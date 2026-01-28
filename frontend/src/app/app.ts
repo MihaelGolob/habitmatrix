@@ -1,9 +1,7 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HabitGrid } from './habit-grid/habit-grid';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroMoon, heroSun } from '@ng-icons/heroicons/outline';
 import { Header } from './components/header/header';
+import { AuthService } from './services/auth-service';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +11,5 @@ import { Header } from './components/header/header';
 })
 
 export class App{
+  constructor(public authService: AuthService) {}
 }
